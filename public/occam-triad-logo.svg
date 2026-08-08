@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Sovereign Makers triad mark</title>
+  <desc id="desc">A double circular Sovereign Makers mark built from purple, raspberry, and acid lime arcs.</desc>
+  <g fill="none" stroke-linecap="round" shape-rendering="geometricPrecision">
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#7C5CFC" stroke-width="30" stroke-dasharray="104 256" transform="rotate(-92 128 128)" />
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#E30B5C" stroke-width="30" stroke-dasharray="104 256" transform="rotate(28 128 128)" />
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#C6FF00" stroke-width="30" stroke-dasharray="104 256" transform="rotate(148 128 128)" />
+
+    <!-- Repaint each clockwise trailing cap so every color owns one junction. -->
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#7C5CFC" stroke-width="30" stroke-dasharray="1 359" transform="rotate(11.5 128 128)" />
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#E30B5C" stroke-width="30" stroke-dasharray="1 359" transform="rotate(131.5 128 128)" />
+    <circle cx="128" cy="128" r="84" pathLength="360" stroke="#C6FF00" stroke-width="30" stroke-dasharray="1 359" transform="rotate(251.5 128 128)" />
+
+    <circle cx="128" cy="128" r="43" pathLength="360" stroke="#7C5CFC" stroke-width="12" stroke-dasharray="78 282" transform="rotate(-17 128 128)" />
+    <circle cx="128" cy="128" r="43" pathLength="360" stroke="#E30B5C" stroke-width="12" stroke-dasharray="78 282" transform="rotate(103 128 128)" />
+    <circle cx="128" cy="128" r="43" pathLength="360" stroke="#C6FF00" stroke-width="12" stroke-dasharray="78 282" transform="rotate(223 128 128)" />
+  </g>
+</svg>

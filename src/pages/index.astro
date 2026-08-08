@@ -1,0 +1,1354 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark" data-view="home">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skayn — 官方网站</title>
+    <meta name="description" content="Skayn 官方网站：查看发布状态、安全与隐私原则和支持渠道。" />
+  <link rel="icon" type="image/svg+xml" href="./skayn-logo.svg" />
+    <link rel="canonical" href="https://skayn.net/" />
+    <meta property="og:title" content="Skayn — 官方网站" />
+    <meta property="og:description" content="查看 Skayn 发布状态、安全与隐私原则和支持渠道。" />
+    <meta property="og:url" content="https://skayn.net/" />
+    <meta property="og:type" content="website" />
+  <script is:inline>
+      document.documentElement.classList.add('js');
+      if (document.startViewTransition) {
+        document.documentElement.classList.add('has-view-transitions');
+      }
+    const navigationEntry = performance.getEntriesByType('navigation')[0];
+    const isReload = navigationEntry?.type === 'reload';
+      const requestedView = window.location.hash.slice(1);
+      if (isReload) {
+        document.documentElement.dataset.view = 'home';
+        try {
+          window.history.replaceState({ view: 'home' }, '', '#top');
+        } catch {
+          window.location.hash = 'top';
+        }
+      } else if (['download', 'security', 'support'].includes(requestedView)) {
+        document.documentElement.dataset.view = requestedView;
+      }
+    </script>
+    <style>
+      :root {
+        --purple: #7c5cfc;
+        --raspberry: #e30b5c;
+        --lime: #c6ff00;
+        --ink: #090a0c;
+        --paper: #f5f6f3;
+        --footer-height: 48px;
+        font-family: Inter, 'Segoe UI', 'PingFang SC', system-ui, sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html[data-theme='dark'] {
+        --bg: var(--ink);
+        --wordmark: #f7f7f5;
+        --control: #f7f7f5;
+        --ambient-opacity: 0.24;
+        --surface: #111216;
+        --muted: #a9abb3;
+        --line: rgba(255, 255, 255, 0.12);
+        --ambient-detail-opacity: 0.09;
+      }
+      html[data-theme='light'] {
+        --bg: var(--paper);
+        --wordmark: var(--ink);
+        --control: var(--ink);
+        --ambient-opacity: 0.16;
+        --surface: #e9ebe7;
+        --muted: #5d6068;
+        --line: rgba(9, 10, 12, 0.14);
+        --ambient-detail-opacity: 0.07;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        background: var(--bg);
+      }
+
+      body {
+        min-height: 100vh;
+        overflow-x: hidden;
+        background: var(--bg);
+        color: var(--wordmark);
+        transition: background-color 260ms ease;
+      }
+
+      html.js {
+        height: 100%;
+        overflow: hidden;
+      }
+      html.js body {
+        height: 100vh;
+        height: 100dvh;
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) var(--footer-height);
+      }
+      html.js main {
+        position: relative;
+        min-height: 0;
+        overflow: visible;
+      }
+
+      .toggle {
+        position: relative;
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--control);
+        cursor: pointer;
+        display: grid;
+        place-items: center;
+        opacity: 0.72;
+        transition:
+          color 260ms ease,
+          opacity 180ms ease,
+          transform 180ms ease;
+      }
+      .toggle:hover {
+        opacity: 1;
+        transform: rotate(18deg);
+      }
+      .toggle:focus-visible {
+        outline: 2px solid var(--purple);
+        outline-offset: 4px;
+      }
+
+      .theme-icon {
+        position: relative;
+        width: 16px;
+        height: 16px;
+        border: 1.5px solid currentColor;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+      .theme-icon::after {
+        content: '';
+        position: absolute;
+        inset: 0 0 0 50%;
+        background: currentColor;
+      }
+
+      .site-header {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        width: 100%;
+        height: 76px;
+        padding: 0 28px;
+        border-bottom: 1px solid transparent;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition:
+          background-color 260ms ease,
+          border-color 260ms ease;
+      }
+      html:not([data-view='home']) .site-header {
+        border-bottom-color: var(--line);
+        background: var(--bg);
+      }
+      .site-brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--wordmark);
+        font-size: 15px;
+        font-weight: 750;
+        letter-spacing: 0;
+        text-decoration: none;
+      }
+      .site-brand img {
+        width: 28px;
+        height: 28px;
+      }
+      .back-arrow {
+        width: 20px;
+        color: var(--muted);
+        font-size: 21px;
+        font-weight: 500;
+        line-height: 1;
+        transition:
+          color 180ms ease,
+          transform 180ms ease;
+      }
+      .site-brand:hover .back-arrow {
+        color: var(--wordmark);
+        transform: translateX(-3px);
+      }
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+      }
+      .site-nav {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+      .site-nav a {
+        position: relative;
+        color: var(--muted);
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 180ms ease;
+      }
+      .site-nav a:hover {
+        color: var(--wordmark);
+      }
+      .site-nav .nav-download {
+        color: var(--wordmark);
+      }
+      .site-nav a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -8px;
+        height: 2px;
+        background: var(--nav-accent, transparent);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 220ms ease;
+      }
+      html[data-view='download'] .site-nav a[href='#download'] {
+        --nav-accent: var(--lime);
+        color: var(--wordmark);
+      }
+      html[data-view='security'] .site-nav a[href='#security'] {
+        --nav-accent: var(--purple);
+        color: var(--wordmark);
+      }
+      html[data-view='support'] .site-nav a[href='#support'] {
+        --nav-accent: var(--raspberry);
+        color: var(--wordmark);
+      }
+      html:not([data-view='home']) .site-nav a[aria-current='page']::after {
+        transform: scaleX(1);
+      }
+
+      html.js .site-brand {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition:
+          opacity 220ms ease,
+          transform 360ms cubic-bezier(0.2, 0.7, 0.2, 1),
+          visibility 0s linear 360ms;
+      }
+      html.js:not([data-view='home']) .site-brand {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        transition-delay: 180ms, 180ms, 0s;
+      }
+      html.js[data-view='home'] .hero-mark {
+        view-transition-name: brand-mark;
+      }
+      html.js[data-view='home'] .wordmark {
+        view-transition-name: brand-word;
+      }
+      html.js:not([data-view='home']) .site-brand img {
+        view-transition-name: brand-mark;
+      }
+      html.js:not([data-view='home']) .site-brand-name {
+        view-transition-name: brand-word;
+      }
+
+      .stage {
+        position: relative;
+        height: 88vh;
+        height: 88dvh;
+        max-height: 920px;
+        width: 100vw;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+      }
+      html.js .stage {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        max-height: none;
+        overflow: visible;
+      }
+
+      .ambient-mark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 0;
+        width: max(100vw, 120vh);
+        width: max(100vw, 120dvh);
+        max-width: none;
+        opacity: var(--ambient-opacity);
+        transform: translate(-50%, -50%) rotate(-8deg);
+        transition:
+          opacity 520ms ease,
+          transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+        animation: ambient-in 1000ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+        view-transition-name: ambient-mark;
+      }
+      html.js.intro-complete .ambient-mark,
+      html.js:not([data-view='home']) .ambient-mark {
+        animation: none;
+      }
+      html.js[data-view='download'] .ambient-mark {
+        opacity: var(--ambient-detail-opacity);
+        transform: translate(-50%, -50%) rotate(6deg) scale(0.94);
+      }
+      html.js[data-view='security'] .ambient-mark {
+        opacity: var(--ambient-detail-opacity);
+        transform: translate(-50%, -50%) rotate(-22deg) scale(0.98);
+      }
+      html.js[data-view='support'] .ambient-mark {
+        opacity: var(--ambient-detail-opacity);
+        transform: translate(-50%, -50%) rotate(18deg) scale(1.04);
+      }
+
+      .lockup {
+        position: relative;
+        z-index: 2;
+        display: grid;
+        justify-items: center;
+        gap: 28px;
+        transform: translateY(-2vh);
+        pointer-events: none;
+        opacity: 1;
+        visibility: visible;
+        transition:
+          opacity 200ms ease,
+          transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
+          visibility 0s;
+      }
+      html.js:not([data-view='home']) .lockup {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8vh) scale(0.84);
+        transition-delay: 0s, 0s, 240ms;
+      }
+
+      .hero-mark {
+        width: clamp(220px, 32vmin, 360px);
+        aspect-ratio: 1;
+      }
+      .tone-purple {
+        stroke: var(--purple);
+      }
+      .tone-raspberry {
+        stroke: var(--raspberry);
+      }
+      .tone-lime {
+        stroke: var(--lime);
+      }
+
+      .hero-mark .tone-purple {
+        --tone-delay: 140ms;
+      }
+      .hero-mark .tone-raspberry {
+        --tone-delay: 260ms;
+      }
+      .hero-mark .tone-lime {
+        --tone-delay: 380ms;
+      }
+      .hero-mark circle {
+        animation-duration: 720ms;
+        animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+        animation-fill-mode: both;
+      }
+      .hero-mark .outer {
+        animation-name: draw-outer;
+        animation-delay: var(--tone-delay);
+      }
+      .hero-mark .inner {
+        animation-name: draw-inner;
+        animation-delay: calc(var(--tone-delay) + 120ms);
+      }
+      .hero-mark .endpoint {
+        animation-name: endpoint-in;
+        animation-delay: calc(var(--tone-delay) + 840ms);
+        animation-duration: 120ms;
+      }
+
+      .wordmark {
+        color: var(--wordmark);
+        font-size: 116px;
+        font-weight: 800;
+        letter-spacing: 0;
+        line-height: 0.86;
+        transition: color 260ms ease;
+        animation: wordmark-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) 440ms both;
+      }
+
+      .hero-download {
+        height: 50px;
+        margin-top: 4px;
+        padding: 0 22px;
+        border-radius: 6px;
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        background: var(--wordmark);
+        color: var(--bg);
+        font-size: 15px;
+        font-weight: 750;
+        text-decoration: none;
+        pointer-events: auto;
+        transition:
+          color 260ms ease,
+          background-color 260ms ease,
+          transform 180ms ease;
+        animation: wordmark-in 600ms cubic-bezier(0.2, 0.7, 0.2, 1) 620ms both;
+      }
+      html.js[data-view='home'] .hero-download {
+        view-transition-name: hero-download;
+      }
+      .hero-download:hover {
+        transform: translateY(-2px);
+      }
+      .hero-download:focus-visible {
+        outline: 2px solid var(--lime);
+        outline-offset: 4px;
+      }
+      .hero-download span[aria-hidden='true'] {
+        font-size: 19px;
+        line-height: 1;
+      }
+
+      .content-section {
+        padding: 112px 24px;
+        background: var(--bg);
+        color: var(--wordmark);
+        transition:
+          color 260ms ease,
+          background-color 260ms ease;
+      }
+      .content-section.surface {
+        background: var(--surface);
+      }
+      .section-inner {
+        width: min(100%, 1120px);
+        margin: 0 auto;
+      }
+      html.js .content-section {
+        position: absolute;
+        inset: 0;
+        z-index: 4;
+        padding-top: 112px;
+        padding-bottom: 80px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        background: transparent;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(24px);
+        transition:
+          opacity 220ms ease,
+          transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1),
+          visibility 0s linear 420ms;
+      }
+      html.js .content-section.surface {
+        background: transparent;
+      }
+      html.js .content-section .section-inner {
+        min-height: calc(100vh - 176px - var(--footer-height));
+        min-height: calc(100dvh - 176px - var(--footer-height));
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      html.js[data-view='download'] #download,
+      html.js[data-view='security'] #security,
+      html.js[data-view='support'] #support {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition-delay: 160ms, 160ms, 0s;
+        view-transition-name: scene-content;
+      }
+      html.js .site-footer {
+        position: relative;
+        z-index: 20;
+      }
+      html.has-view-transitions .ambient-mark,
+      html.has-view-transitions .lockup,
+      html.has-view-transitions .site-brand,
+      html.has-view-transitions .content-section {
+        transition: none;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+      ::view-transition-group(ambient-mark),
+      ::view-transition-group(brand-mark),
+      ::view-transition-group(brand-word) {
+        animation-duration: 620ms;
+        animation-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
+      }
+      ::view-transition-old(scene-content) {
+        animation: scene-out 180ms ease both;
+      }
+      ::view-transition-new(scene-content) {
+        animation: scene-in 420ms cubic-bezier(0.2, 0.7, 0.2, 1) 140ms both;
+      }
+      ::view-transition-old(hero-download) {
+        animation: scene-out 180ms ease both;
+      }
+      .section-heading {
+        max-width: 760px;
+        margin-bottom: 64px;
+      }
+      .section-kicker {
+        margin-bottom: 16px;
+        color: var(--raspberry);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+      .section-title {
+        max-width: 720px;
+        font-size: 52px;
+        font-weight: 780;
+        letter-spacing: 0;
+        line-height: 1.08;
+      }
+      .section-copy {
+        max-width: 680px;
+        margin-top: 22px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+      .download-layout {
+        padding: 36px 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 48px;
+      }
+      .download-meta {
+        display: grid;
+        gap: 10px;
+      }
+      .download-meta strong {
+        font-size: 21px;
+        letter-spacing: 0;
+      }
+      .download-meta span {
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .download-action {
+        display: grid;
+        justify-items: end;
+        gap: 10px;
+      }
+      .download-unavailable {
+        height: 50px;
+        padding: 0 20px;
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--muted);
+        font: inherit;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: not-allowed;
+      }
+      .download-status {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .info-item {
+        min-height: 220px;
+        padding: 32px 40px 32px 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .info-item + .info-item {
+        padding-left: 40px;
+      }
+      .info-item:not(:last-child) {
+        border-right: 1px solid var(--line);
+      }
+      .info-mark {
+        width: 30px;
+        height: 4px;
+        margin-bottom: 42px;
+        background: var(--item-accent);
+      }
+      .info-item h3 {
+        font-size: 19px;
+        line-height: 1.3;
+        letter-spacing: 0;
+      }
+      .info-item p {
+        margin-top: 14px;
+        color: var(--muted);
+        font-size: 15px;
+        line-height: 1.7;
+      }
+      .info-item .info-status {
+        margin-top: auto;
+        padding-top: 24px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .accent-purple {
+        --item-accent: var(--purple);
+      }
+      .accent-raspberry {
+        --item-accent: var(--raspberry);
+      }
+      .accent-lime {
+        --item-accent: var(--lime);
+      }
+
+      .privacy-note {
+        margin-top: 28px;
+        padding: 22px 0 0 22px;
+        border-top: 1px solid var(--line);
+        border-left: 4px solid var(--raspberry);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .support-footer {
+        margin-top: 48px;
+        padding-top: 28px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 28px;
+      }
+      .support-footer p {
+        max-width: 660px;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+      .support-unavailable {
+        color: var(--wordmark);
+        font-size: 14px;
+        font-weight: 750;
+        white-space: nowrap;
+      }
+
+      .site-footer {
+        height: var(--footer-height);
+        padding: 0 28px;
+        border-top: 0;
+        background: transparent;
+        color: var(--muted);
+        transition: color 260ms ease;
+      }
+      .footer-inner {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        font-size: 13px;
+        transition: opacity 220ms ease;
+      }
+      html.js[data-view='home'] .footer-inner {
+        opacity: 0.56;
+      }
+      html.js[data-view='home'] .site-footer:hover .footer-inner,
+      html.js[data-view='home'] .site-footer:focus-within .footer-inner {
+        opacity: 1;
+      }
+      .footer-domain {
+        color: var(--wordmark);
+        font-weight: 650;
+        text-decoration: none;
+      }
+      .footer-domain:hover {
+        color: var(--lime);
+      }
+
+      @keyframes scene-out {
+        from {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateY(-14px);
+        }
+      }
+      @keyframes scene-in {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes ambient-in {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -50%) rotate(-14deg) scale(1.06);
+        }
+        to {
+          opacity: var(--ambient-opacity);
+          transform: translate(-50%, -50%) rotate(-8deg) scale(1);
+        }
+      }
+      @keyframes draw-outer {
+        from {
+          opacity: 0;
+          stroke-dasharray: 0 360;
+        }
+        to {
+          opacity: 1;
+          stroke-dasharray: 104 256;
+        }
+      }
+      @keyframes endpoint-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes draw-inner {
+        from {
+          opacity: 0;
+          stroke-dasharray: 0 360;
+        }
+        to {
+          opacity: 1;
+          stroke-dasharray: 78 282;
+        }
+      }
+      @keyframes wordmark-in {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 900px) {
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+        .info-item {
+          min-height: 0;
+          padding: 28px 0;
+        }
+        .info-item:not(:last-child) {
+          border-right: 0;
+        }
+        .info-item + .info-item {
+          padding-left: 0;
+          border-top: 1px solid var(--line);
+        }
+        .info-mark {
+          margin-bottom: 28px;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .toggle {
+          width: 36px;
+          height: 36px;
+        }
+        .site-header {
+          width: 100%;
+          height: 64px;
+          padding: 0 16px;
+        }
+        .header-actions {
+          gap: 14px;
+        }
+        .site-nav {
+          gap: 18px;
+        }
+        .site-nav a:not(.nav-download) {
+          display: none;
+        }
+        .ambient-mark {
+          width: max(240vw, 120vh);
+          width: max(240vw, 120dvh);
+        }
+        .lockup {
+          gap: 18px;
+          transform: translateY(-1vh);
+        }
+        .hero-mark {
+          width: 220px;
+        }
+        .wordmark {
+          font-size: 68px;
+        }
+        .hero-download {
+          height: 46px;
+          margin-top: 2px;
+          padding: 0 18px;
+        }
+        .content-section {
+          padding: 80px 20px;
+        }
+        html.js .content-section {
+          padding: 92px 20px 72px;
+        }
+        html.js .content-section .section-inner {
+          min-height: calc(100vh - 132px - var(--footer-height));
+          min-height: calc(100dvh - 132px - var(--footer-height));
+          justify-content: flex-start;
+        }
+        .section-heading {
+          margin-bottom: 44px;
+        }
+        .section-title {
+          font-size: 34px;
+        }
+        .section-copy {
+          font-size: 16px;
+        }
+        .download-layout {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .download-action {
+          justify-items: start;
+        }
+        .support-footer {
+          display: grid;
+        }
+        .site-footer {
+          padding: 0 16px;
+        }
+        .footer-inner {
+          align-items: center;
+          flex-direction: row;
+          gap: 12px;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 380px) {
+        .hero-mark {
+          width: 196px;
+        }
+        .wordmark {
+          font-size: 60px;
+        }
+      }
+
+      @media (max-height: 700px) and (min-width: 721px) {
+        .lockup {
+          gap: 18px;
+        }
+        .hero-mark {
+          width: 240px;
+        }
+        .wordmark {
+          font-size: 84px;
+        }
+        .hero-download {
+          height: 44px;
+        }
+      }
+
+      @media (max-height: 520px) {
+        .lockup {
+          gap: 12px;
+          transform: translateY(2vh);
+        }
+        .hero-mark {
+          width: 150px;
+        }
+        .wordmark {
+          font-size: 56px;
+        }
+        .hero-download {
+          height: 42px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        .ambient-mark,
+        .hero-mark circle,
+        .wordmark,
+        .hero-download {
+          animation: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="stage" id="top" aria-labelledby="hero-title">
+        <header class="site-header">
+          <a class="site-brand" href="#top" aria-label="返回 Skayn 首页" title="返回首页">
+            <span class="back-arrow" aria-hidden="true">←</span>
+            <img src="./skayn-logo.svg" alt="" />
+            <span class="site-brand-name">SKAYN</span>
+          </a>
+          <div class="header-actions">
+            <nav class="site-nav" aria-label="主要导航">
+              <a href="#security">安全与隐私</a>
+              <a href="#support">联系与支持</a>
+              <a class="nav-download" href="#download">下载</a>
+            </nav>
+            <button class="toggle" type="button" aria-label="切换到浅色背景" title="切换到浅色背景">
+              <span class="theme-icon" aria-hidden="true"></span>
+            </button>
+          </div>
+        </header>
+
+        <svg
+          class="ambient-mark"
+          viewBox="20 20 216 216"
+          aria-hidden="true"
+          fill="none"
+          stroke-linecap="round"
+          shape-rendering="geometricPrecision"
+        >
+          <circle
+            class="tone-purple"
+            cx="128"
+            cy="128"
+            r="84"
+            pathLength="360"
+            stroke-width="12"
+            stroke-dasharray="104 256"
+            transform="rotate(-92 128 128)"
+          />
+          <circle
+            class="tone-raspberry"
+            cx="128"
+            cy="128"
+            r="84"
+            pathLength="360"
+            stroke-width="12"
+            stroke-dasharray="104 256"
+            transform="rotate(28 128 128)"
+          />
+          <circle
+            class="tone-lime"
+            cx="128"
+            cy="128"
+            r="84"
+            pathLength="360"
+            stroke-width="12"
+            stroke-dasharray="104 256"
+            transform="rotate(148 128 128)"
+          />
+        </svg>
+
+        <div class="lockup">
+          <svg
+            class="hero-mark"
+            viewBox="28 28 200 200"
+            role="img"
+            aria-labelledby="mark-title mark-description"
+            fill="none"
+            stroke-linecap="round"
+            shape-rendering="geometricPrecision"
+          >
+            <title id="mark-title">Skayn</title>
+            <desc id="mark-description">由紫色、树莓红和荧光绿圆弧组成的 Skayn 标志</desc>
+            <circle
+              class="tone-purple outer"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="104 256"
+              transform="rotate(-92 128 128)"
+            />
+            <circle
+              class="tone-raspberry outer"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="104 256"
+              transform="rotate(28 128 128)"
+            />
+            <circle
+              class="tone-lime outer"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="104 256"
+              transform="rotate(148 128 128)"
+            />
+            <circle
+              class="tone-purple endpoint"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="1 359"
+              transform="rotate(11.5 128 128)"
+            />
+            <circle
+              class="tone-raspberry endpoint"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="1 359"
+              transform="rotate(131.5 128 128)"
+            />
+            <circle
+              class="tone-lime endpoint"
+              cx="128"
+              cy="128"
+              r="84"
+              pathLength="360"
+              stroke-width="30"
+              stroke-dasharray="1 359"
+              transform="rotate(251.5 128 128)"
+            />
+            <circle
+              class="tone-purple inner"
+              cx="128"
+              cy="128"
+              r="43"
+              pathLength="360"
+              stroke-width="12"
+              stroke-dasharray="78 282"
+              transform="rotate(-17 128 128)"
+            />
+            <circle
+              class="tone-raspberry inner"
+              cx="128"
+              cy="128"
+              r="43"
+              pathLength="360"
+              stroke-width="12"
+              stroke-dasharray="78 282"
+              transform="rotate(103 128 128)"
+            />
+            <circle
+              class="tone-lime inner"
+              cx="128"
+              cy="128"
+              r="43"
+              pathLength="360"
+              stroke-width="12"
+              stroke-dasharray="78 282"
+              transform="rotate(223 128 128)"
+            />
+          </svg>
+          <h1 class="wordmark" id="hero-title">SKAYN</h1>
+          <a class="hero-download" href="#download">
+            <span>下载 Skayn</span>
+            <span aria-hidden="true">↓</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="content-section surface" id="download" aria-labelledby="download-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Download</p>
+            <h2 class="section-title" id="download-title">从官方入口获取 Skayn</h2>
+            <p class="section-copy">
+              正式安装包发布后，本页面会同时提供适用系统、版本号、发布日期、系统要求和文件校验信息。请只从
+              Skayn 官方页面下载安装。
+            </p>
+          </div>
+          <div class="download-layout">
+            <div class="download-meta">
+              <strong>Skayn 正式版</strong>
+              <span>下载平台与最低系统要求将在发布前确认。</span>
+            </div>
+            <div class="download-action">
+              <button
+                class="download-unavailable"
+                type="button"
+                disabled="disabled"
+                aria-describedby="download-status"
+              >
+                安装包准备中
+              </button>
+              <span class="download-status" id="download-status">当前没有可公开下载的版本</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section" id="security" aria-labelledby="security-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Security &amp; Privacy</p>
+            <h2 class="section-title" id="security-title">安全与隐私不是附加项</h2>
+            <p class="section-copy">
+              Skayn
+              以清晰、克制和可控作为数据与权限设计的基础。每项能力都应说明需要什么、为什么需要，以及用户如何停止授权。
+            </p>
+          </div>
+          <div class="info-grid">
+            <article class="info-item accent-purple">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>最小化处理</h3>
+              <p>只处理提供功能、保障稳定性和解决问题所必需的信息；新增数据用途需要被明确说明。</p>
+            </article>
+            <article class="info-item accent-raspberry">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>权限透明</h3>
+              <p>涉及设备、文件、网络或第三方服务的敏感操作，应在清晰可见的权限边界内进行。</p>
+            </article>
+            <article class="info-item accent-lime">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>控制权属于用户</h3>
+              <p>关键设置和授权应当可查看、可调整、可撤销，并为删除与退出提供明确路径。</p>
+            </article>
+          </div>
+          <p class="privacy-note">
+            公开发布前将补齐正式隐私政策，明确数据类型、处理目的、保存期限、第三方服务、用户权利和安全事件报告方式。
+          </p>
+        </div>
+      </section>
+
+      <section class="content-section surface" id="support" aria-labelledby="support-title">
+        <div class="section-inner">
+          <div class="section-heading">
+            <p class="section-kicker">Contact &amp; Support</p>
+            <h2 class="section-title" id="support-title">需要帮助时，应该知道去哪里</h2>
+            <p class="section-copy">
+              正式发布时，Skayn
+              会为产品使用、安装升级和安全问题提供分开的联系入口，让每类问题进入正确的处理流程。
+            </p>
+          </div>
+          <div class="info-grid">
+            <article class="info-item accent-purple">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>产品帮助</h3>
+              <p>处理使用问题、功能建议、异常反馈以及账户或授权相关疑问。</p>
+              <span class="info-status">支持入口将在发布前公布</span>
+            </article>
+            <article class="info-item accent-raspberry">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>安全报告</h3>
+              <p>用于报告可能影响用户数据、权限边界或软件供应链的安全问题。</p>
+              <span class="info-status">专用安全联系方式准备中</span>
+            </article>
+            <article class="info-item accent-lime">
+              <span class="info-mark" aria-hidden="true"></span>
+              <h3>下载与安装</h3>
+              <p>提供系统要求、安装失败、版本升级和安装包校验方面的帮助。</p>
+              <span class="info-status">随正式安装包同步开放</span>
+            </article>
+          </div>
+          <div class="support-footer">
+            <p>
+              目前尚未配置可验证的 Skayn
+              支持邮箱或工单地址。正式渠道确认后，本区域将直接提供联系入口，不会要求用户通过非官方来源提交敏感信息。
+            </p>
+            <span class="support-unavailable">支持渠道准备中</span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <a class="footer-domain" href="https://skayn.net/">skayn.net</a>
+        <span>© 2026 Skayn</span>
+      </div>
+    </footer>
+
+    <script is:inline>
+      const root = document.documentElement;
+      const toggle = document.querySelector('.toggle');
+      const ambientMark = document.querySelector('.ambient-mark');
+      const siteBrand = document.querySelector('.site-brand');
+      const heroLockup = document.querySelector('.lockup');
+      const contentSections = [...document.querySelectorAll('.content-section')];
+      const viewIds = ['home', 'download', 'security', 'support'];
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let activeTransition = null;
+
+      const viewFromHash = () => {
+        const hashView = window.location.hash.slice(1);
+        if (hashView === 'top' || !viewIds.includes(hashView)) return 'home';
+        return hashView;
+      };
+
+      const syncViewAccessibility = (view) => {
+        contentSections.forEach((section) => {
+          const active = section.id === view;
+          section.inert = !active;
+          section.setAttribute('aria-hidden', String(!active));
+        });
+
+        const homeActive = view === 'home';
+        heroLockup.inert = !homeActive;
+        heroLockup.setAttribute('aria-hidden', String(!homeActive));
+        siteBrand.inert = homeActive;
+        siteBrand.setAttribute('aria-hidden', String(homeActive));
+
+        document.querySelectorAll('.site-nav a').forEach((link) => {
+          const active = link.getAttribute('href') === `#${view}`;
+          if (active) link.setAttribute('aria-current', 'page');
+          else link.removeAttribute('aria-current');
+        });
+      };
+
+      const focusViewHeading = (view) => {
+        const headingId = view === 'home' ? 'hero-title' : `${view}-title`;
+        const heading = document.getElementById(headingId);
+        if (!heading) return;
+        heading.setAttribute('tabindex', '-1');
+        heading.focus({ preventScroll: true });
+      };
+
+      const commitView = (view) => {
+        root.dataset.view = view;
+        syncViewAccessibility(view);
+      };
+
+      const navigateTo = (view, options = {}) => {
+        const { pushHistory = true, moveFocus = true } = options;
+        if (!viewIds.includes(view)) view = 'home';
+
+        if (root.dataset.view === view) {
+          syncViewAccessibility(view);
+          if (moveFocus) focusViewHeading(view);
+          return;
+        }
+
+        if (pushHistory) {
+          const nextHash = view === 'home' ? '#top' : `#${view}`;
+          try {
+            window.history.pushState({ view }, '', nextHash);
+          } catch {
+            window.location.hash = nextHash;
+          }
+        }
+
+        root.classList.add('intro-complete');
+        const applyView = () => commitView(view);
+        const canTransition = document.startViewTransition && !reduceMotion.matches;
+
+        if (canTransition) {
+          activeTransition?.skipTransition();
+          const transition = document.startViewTransition(applyView);
+          activeTransition = transition;
+          transition.finished
+            .then(() => {
+              if (moveFocus && root.dataset.view === view) focusViewHeading(view);
+            })
+            .finally(() => {
+              if (activeTransition === transition) activeTransition = null;
+            });
+        } else {
+          applyView();
+          if (moveFocus)
+            window.setTimeout(() => focusViewHeading(view), reduceMotion.matches ? 0 : 440);
+        }
+      };
+
+      const updateToggleLabel = () => {
+        const nextTheme = root.dataset.theme === 'dark' ? '浅色' : '深色';
+        const label = `切换到${nextTheme}背景`;
+        toggle.setAttribute('aria-label', label);
+        toggle.setAttribute('title', label);
+      };
+
+      toggle.addEventListener('click', () => {
+        root.dataset.theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        updateToggleLabel();
+      });
+
+      document.addEventListener('click', (event) => {
+        const link = event.target.closest('a[href^="#"]');
+        if (!link) return;
+        const hashTarget = link.getAttribute('href').slice(1);
+        const view = hashTarget === 'top' ? 'home' : hashTarget;
+        if (!viewIds.includes(view)) return;
+        event.preventDefault();
+        navigateTo(view);
+      });
+
+      let historySyncQueued = false;
+      const syncViewFromLocation = () => {
+        if (historySyncQueued) return;
+        historySyncQueued = true;
+        window.queueMicrotask(() => {
+          historySyncQueued = false;
+          navigateTo(viewFromHash(), { pushHistory: false, moveFocus: true });
+        });
+      };
+      window.addEventListener('popstate', syncViewFromLocation);
+      window.addEventListener('hashchange', syncViewFromLocation);
+      window.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && root.dataset.view !== 'home') {
+          navigateTo('home');
+        }
+      });
+
+      ambientMark.addEventListener(
+        'animationend',
+        () => {
+          root.classList.add('intro-complete');
+        },
+        { once: true },
+      );
+
+      const currentView = root.dataset.view || viewFromHash();
+      commitView(currentView);
+      if (currentView !== 'home') root.classList.add('intro-complete');
+      updateToggleLabel();
+    </script>
+  </body>
+</html>

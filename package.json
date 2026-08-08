@@ -1,0 +1,29 @@
+{
+  "name": "skayn-site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=22.12.0 <25.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "validate": "node scripts/validate-site.mjs",
+    "typecheck": "astro check",
+    "test": "node --test",
+    "quality": "npm run format:check && npm run validate && npm run typecheck && npm test && npm run build",
+    "precheck": "npm run quality",
+    "audit:deps": "npm audit --audit-level=high --registry=https://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "astro": "^7.2.0",
+    "prettier": "^3.6.2",
+    "typescript": "^6.0.3"
+  }
+}
